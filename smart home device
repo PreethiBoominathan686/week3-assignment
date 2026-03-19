@@ -1,0 +1,75 @@
+abstract class Device {
+    private String deviceName;
+    private boolean powerStatus; 
+    public Device(String deviceName)
+  {
+        this.deviceName = deviceName;
+        this.powerStatus = false;
+    }
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public boolean isPowerOn() {
+        return powerStatus;
+    }
+
+    public void setPowerStatus(boolean status) {
+        this.powerStatus = status;
+         }
+    public void turnOn() {
+        powerStatus = true;
+        System.out.println(deviceName + " turned ON");
+    }
+
+    public void turnOff() {
+        powerStatus = false;
+        System.out.println(deviceName + " turned OFF");
+    }
+    abstract void displayStatus();
+}
+class Light extends Device {
+
+    public Light(String name) {
+        super(name);
+    }
+    void displayStatus() {
+        System.out.println("Light [" + getDeviceName() + "] is " 
+            + (isPowerOn() ? "ON" : "OFF"));
+    }
+}
+class Thermostat extends Device {
+    private int temperature;
+
+    public Thermostat(String name, int temp) {
+        super(name);
+        this.temperature = temp;
+    }
+    public int getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(int temp) {
+        this.temperature = temp;
+    }
+    void displayStatus() {
+        System.out.println("Thermostat [" + getDeviceName() + "] is "
+            + (isPowerOn() ? "ON" : "OFF") 
+            + " | Temperature: " + temperature + "°C");
+    }
+}
+public class SmartHomeDeviceSystem {
+    public static void main(String[] args) 
+  {
+        Device d1 = new Light("Bedroom Light");
+        Device d2 = new Thermostat("Hall Thermostat", 25);
+        d1.turnOn();
+        d2.turnOn();
+        d1.displayStatus();
+        d2.displayStatus();
+        d1.turnOff();
+        d2.turnOff();
+        d1.displayStatus();
+        d2.displayStatus();
+    }
+}
